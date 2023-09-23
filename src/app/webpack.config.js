@@ -76,8 +76,5 @@ module.exports = {
     plugins: [
         new Dotenv({path: '../../.env'}),
         new MomentLocalesPlugin(),
-        new HtmlWebpackPlugin({
-            template: 'index.html',
-        }),
     ]
 };
