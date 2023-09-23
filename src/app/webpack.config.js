@@ -21,7 +21,7 @@ const CONFIG = {
     },
 
     devServer: {
-        contentBase: path.resolve(__dirname, '../../public'),
+        // contentBase: path.resolve(__dirname, '../../public'),
         proxy: {
             '*': 'http://localhost:3000'
         }
@@ -75,4 +75,4 @@ const CONFIG = {
 };
 
 // This line enables bundling against src in this repo rather than installed module
-module.exports = env => (env ? require('./webpack.config.local')(CONFIG)(env) : CONFIG);
+module.exports = CONFIG;
