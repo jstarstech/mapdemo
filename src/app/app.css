@@ -9,6 +9,11 @@ body {
     font-size: 12px;
     line-height: 1.833;
     overflow-y: auto;
+    margin: 0;
+    font-family: sans-serif;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
 }
 
 hr {
