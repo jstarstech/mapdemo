@@ -7,7 +7,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const redis = require("redis");
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -27,16 +26,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-/*const tile38 = redis.createClient({
-    host: process.env.TILE38_HOST,
-    port: process.env.TILE38_PORT,
-});
-
-const tile38_ctl = redis.createClient({
-    host: process.env.TILE38_HOST,
-    port: process.env.TILE38_PORT,
-});*/
 
 const redisHost = process.env.REDIS_HOST || 'localhost';
 const redisPort = process.env.REDIS_PORT || 6379;
@@ -78,10 +67,10 @@ app.get('/sse', async (req, res) => {
     await subscriber.connect();
 
     await subscriber.subscribe('hub-counts', (message) => {
-        // console.log("Message: " + message + " on channel: hub-counts is arrive!");
         function log10(v) {
             return Math.log(v) / Math.log(10);
         }
+
         max_value = log10(parseInt(process.env.MAX_VALUE || 10000));
         min_alpha = parseFloat(process.env.MIN_ALPHA || 0.1);
         max_alpha = parseFloat(process.env.MAX_ALPHA || 0.9);
