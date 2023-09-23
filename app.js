@@ -56,9 +56,10 @@ const redisClient = redis.createClient({
 })()
 
 app.get('/', function (req, res, next) {
-    //req.session
-
-    res.render('index', {title: 'Map'});
+    res.render('index', {
+        title: 'MapDemo',
+        MAPBOX_ACCESS_TOKEN: process.env.MAPBOX_ACCESS_TOKEN
+    });
 });
 
 app.get('/sse', async (req, res) => {

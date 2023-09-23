@@ -45,7 +45,7 @@ function _hexagonRadiusForZoom(zoom) {
 
   return Math.round(Math.exp(minSize + scale * (zoom - minZoom)));
 }
-const MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN; // eslint-disable-line
+const _MAPBOX_ACCESS_TOKEN = MAPBOX_ACCESS_TOKEN || process.env.MAPBOX_ACCESS_TOKEN; // eslint-disable-line
 
 function App() {
   const [state, setState] = useState({
@@ -276,7 +276,7 @@ function App() {
           reuseMaps
           mapStyle="mapbox://styles/mapbox/dark-v9"
           styleDiffing={true}
-          mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
+          mapboxAccessToken={_MAPBOX_ACCESS_TOKEN}
         />
       </DeckGL>
     </>
