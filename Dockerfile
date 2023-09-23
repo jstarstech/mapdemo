@@ -1,9 +1,18 @@
-FROM node:10
+FROM node:18-bookworm-slim AS appbuild
+WORKDIR /app
 
-WORKDIR /usr/src/app
+COPY ["./src/app/package.json","./src/app/package-lock.json", "./src/app/"]
+RUN cd ./src/app/ && npm install
+COPY . .
+RUN cd ./src/app/ && npm run build
 
-COPY ./ .
+FROM node:18-bookworm-slim
+WORKDIR /app
 
-RUN npm install
+COPY ["package.json","package-lock.json", "./"]
+RUN npm install --production
+COPY . .
+COPY --from=appbuild /app/public ./public
 
-ENTRYPOINT [ "node", "./bin/www" ]
+EXPOSE 3000/tcp
+CMD ["npm", "start"]

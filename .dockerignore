@@ -1,35 +1,13 @@
-node_modules
+**/node_modules
 npm-debug.log
-pm-tables-data.sql
-bin/Microsoft.NodejsTools.WebRole.dll
-obj/
-.ntvs_analysis.dat
-.ntvs_analysis.dat.tmp
-*.njsproj
-*.suo
-*.sln
 .idea/
-*.iml
-logs
-specifications
-testing
 .env
 .DS_Store
-/run-storm.bat
-db_schema
-# db_schema/pm_metrics/delete all tables.sql
-# db_schema/pm_metrics/000. create_db_all.sql
-# db_schema/pm_metrics/metrics
-# db_schema/pm_metrics/data
-export
-docker
-TCS
-build
 .vscode
 .git
 .dockerignore
 .gitignore
 .gitmodules
 .nvmrc
-
-src/app
+Dockerfile
+README.md
