@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {render} from 'react-dom';
-import {StaticMap} from 'react-map-gl';
+import {Map} from 'mapbox-gl';
 import DeckGL from '@deck.gl/react';
 import {HexagonLayer} from '@deck.gl/aggregation-layers';
 import {GridLayer} from '@deck.gl/aggregation-layers';
@@ -255,11 +254,11 @@ export default class App extends Component {
                     onViewStateChange={this._onViewStateChange.bind(this)}
                     controller={true}
                 >
-                    <StaticMap
+                    <Map
                         reuseMaps
                         mapStyle={mapStyle}
-                        preventStyleDiffing={true}
-                        mapboxApiAccessToken={MAPBOX_TOKEN}
+                        styleDiffing={true}
+                        mapboxAccessToken={MAPBOX_TOKEN}
                     />
                 </DeckGL>
             </>
@@ -267,4 +266,7 @@ export default class App extends Component {
     }
 }
 
-render(<App/>, document.getElementById("root"));
+import { createRoot } from 'react-dom/client';
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<App/>);
