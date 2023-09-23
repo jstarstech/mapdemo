@@ -1,0 +1,13 @@
+.timestamp {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    padding: 5px 5px;
+    background: hsl(180, 2%, 10%);
+    color: #32B9AE;
+    font-size: 18px;
+    border-bottom-right-radius: 5px;
+    border-right: 1px solid #343332;
+    border-bottom: 1px solid #343332;
+}

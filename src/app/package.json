@@ -1,0 +1,31 @@
+{
+  "name": "screengrid",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server --host 0.0.0.0 --port 38761 --progress --hot",
+    "build": "webpack --mode production",
+    "watch": "webpack --mode production  --watch --hot"
+  },
+  "dependencies": {
+    "deck.gl": "^8.1.0",
+    "latlon-geohash": "^2.0.0",
+    "moment": "^2.26.0",
+    "moment-locales-webpack-plugin": "^1.2.0",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "react-map-gl": "^5.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^3.5.3",
+    "dotenv-webpack": "^8.0.1",
+    "html-webpack-plugin": "^4.3.0",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
+  }
+}

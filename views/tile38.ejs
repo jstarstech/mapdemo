@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+    let map;
+    let markers = new Map()
+
+    const evtSource = new EventSource("/tile38_sse", {withCredentials: false});
+    evtSource.onmessage = function (event) {
+        if (!map) {
+            return;
+        }
+
+        let marker = JSON.parse(event.data);
+
+        let mapMarker = markers.get(marker.id);
+
+        if (mapMarker === undefined) {
+            mapMarker = new google.maps.Marker({
+                position: {lat: parseFloat(marker.lat), lng: parseFloat(marker.lng)},
+                map: map,
+                title: marker.id,
+            });
+            markers.set(marker.id, mapMarker);
+        }
+
+        if (mapMarker !== undefined) {
+            let newLatLng = new google.maps.LatLng(parseFloat(marker.lat), parseFloat(marker.lng));
+            mapMarker.setPosition(newLatLng);
+        }
+    }
+
+    evtSource.addEventListener("ping", function (event) {
+        const time = JSON.parse(event.data).time;
+
+    });
+
+    evtSource.onerror = function (err) {
+        console.error("EventSource failed:", err);
+    };
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 18,
+            center: {lat: 37.754142, lng: -122.447164},
+            mapTypeId: 'roadmap'
+        });
+    }
+</script>
+<script async defer src="//maps.googleapis.com/maps/api/js?sensor=false&callback=initMap">
+</script>
+</body>
+</html>

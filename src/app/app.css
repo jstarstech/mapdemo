@@ -1,0 +1,147 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: UberMove, Helvetica Neue, Helvetica, sans-serif !important;
+    font-size: 12px;
+    line-height: 1.833;
+    overflow-y: auto;
+}
+
+hr {
+    border: none;
+    background: #ededed;
+    height: 1px;
+}
+
+.options-panel {
+    position: relative;
+    width: 344px;
+    background: #fff;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .15);
+    border-radius: 5px;
+    margin: 24px;
+    padding: 12px 24px;
+    max-height: 96%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overflow-y: overlay;
+    outline: none;
+    z-index: 999;
+}
+
+.menu-button {
+    z-index: 998;
+    position: absolute;
+    margin: 24px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.menu-button:hover{
+    opacity: 1;
+}
+
+.menu-button > div {
+    width: 30px;
+    height: 3px;
+    background-color: #32b9ae;
+    margin: 5px 0;
+}
+
+.options-panel .close{
+    cursor: pointer;
+    float: right;
+    font-size: 15px;
+}
+
+.options-panel h3 {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin: 8px 0;
+}
+
+.options-panel hr {
+    margin: 12px -24px;
+}
+
+.options-panel p {
+    margin-bottom: 16px;
+}
+
+.options-panel a {
+    display: inline;
+}
+
+.options-panel .input {
+    position: relative;
+    width: 100%;
+}
+
+.options-panel .input label {
+    display: inline-block;
+    width: 40%;
+    margin-right: 10%;
+    color: #5a666d;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.options-panel .input a, .options-panel .input button, .options-panel .input input, .options-panel .input select {
+    background: #fff;
+    font-size: .9em;
+    text-transform: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    padding: 0 4px;
+    width: 50%;
+    height: 20px;
+    line-height: 1.833;
+    text-align: left;
+}
+
+.options-panel .input .tooltip {
+    left: 50%;
+    top: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s;
+}
+
+.options-panel .input:hover .tooltip {
+    opacity: 1;
+}
+
+
+.options-panel .input > * {
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.tooltip {
+    position: absolute;
+    padding: 4px;
+    background: rgba(0, 0, 0, .8);
+    color: #fff;
+    max-width: 300px;
+    font-size: 10px;
+    z-index: 9;
+    pointer-events: none;
+}
+
+.top-left {
+    right: 0;
+}
+
+.top-right {
+    right: 0;
+}
+
+.top-left, .top-right {
+    position: absolute;
+    top: 0;
+}
