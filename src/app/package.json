@@ -10,11 +10,11 @@
   "dependencies": {
     "deck.gl": "^8.9.30",
     "latlon-geohash": "^2.0.0",
-    "mapbox-gl": "^2.15.0",
     "moment": "^2.29.4",
     "moment-locales-webpack-plugin": "^1.2.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-map-gl": "^7.1.6"
   },
   "devDependencies": {
     "@babel/core": "^7.22.20",
