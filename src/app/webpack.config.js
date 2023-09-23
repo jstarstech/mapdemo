@@ -1,13 +1,9 @@
-// NOTE: To use this example standalone (e.g. outside of deck.gl repo)
-// delete the local development overrides at the bottom of this file
-
-const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
-const CONFIG = {
+module.exports = {
     mode: 'development',
 
     entry: {
@@ -23,7 +19,10 @@ const CONFIG = {
     devServer: {
         // contentBase: path.resolve(__dirname, '../../public'),
         proxy: {
-            '*': 'http://localhost:3000'
+            '/sse': {
+                target: 'http://localhost:3000',
+                secure: false
+            }
         }
     },
 
@@ -73,6 +72,3 @@ const CONFIG = {
         }),
     ]
 };
-
-// This line enables bundling against src in this repo rather than installed module
-module.exports = CONFIG;
