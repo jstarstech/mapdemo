@@ -6,7 +6,7 @@ var session = require('express-session');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const redis = require("redis");
 var usersRouter = require('./routes/users');
 
 var app = express();
@@ -28,7 +28,6 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const redis = require("redis");
 /*const tile38 = redis.createClient({
     host: process.env.TILE38_HOST,
     port: process.env.TILE38_PORT,
@@ -39,17 +38,22 @@ const tile38_ctl = redis.createClient({
     port: process.env.TILE38_PORT,
 });*/
 
+const redisHost = process.env.REDIS_HOST || 'localhost';
+const redisPort = process.env.REDIS_PORT || 6379;
+
 const redisClient = redis.createClient({
-    host: process.env.REDIS_HOST || 'localhost',
-    port: process.env.REDIS_PORT || 6379,
+    url: `redis://${redisHost}:${redisPort}`
 });
-redisClient.on("error", function(err) {
-    console.error(err);
-});
-redisClient.on("subscribe", function(channel, count) {
-    console.log('Channel, Subscribed count:', channel, count)
-});
-redisClient.subscribe('hub-counts');
+
+(async () => {
+    redisClient.on("error", function(err) {
+        console.error(err);
+    });
+
+    redisClient.on('error', err => console.error(err));
+
+    await redisClient.connect();
+})()
 
 app.get('/', function (req, res, next) {
     //req.session
@@ -57,14 +61,23 @@ app.get('/', function (req, res, next) {
     res.render('index', {title: 'Map'});
 });
 
-app.get('/sse', (req, res) => {
+app.get('/sse', async (req, res) => {
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.flushHeaders(); // flush the headers to establish SSE with client
 
-    const handleMessage = function(channel, message) {
-        // console.log("Message: " + message + " on channel: " + channel + " is arrive!");
+    const subscriber = redisClient.duplicate();
+
+    subscriber.on('error', err => {
+        console.error(err)
+        res.end();
+    });
+
+    await subscriber.connect();
+
+    await subscriber.subscribe('hub-counts', (message) => {
+        // console.log("Message: " + message + " on channel: hub-counts is arrive!");
         function log10(v) {
             return Math.log(v) / Math.log(10);
         }
@@ -104,14 +117,12 @@ app.get('/sse', (req, res) => {
             }
             res.write(`data: ${JSON.stringify(data)}\n\n`);
         }
-    };
-
-    redisClient.addListener("message", handleMessage);
+    });
 
     // If client closes connection, stop sending events
     res.on('close', () => {
         console.log('client dropped me');
-        redisClient.removeListener("message", handleMessage);
+        subscriber.quit();
         res.end();
     });
 });
